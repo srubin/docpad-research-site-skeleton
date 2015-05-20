@@ -4,9 +4,15 @@ description = "This is a site for my research project on blah blah blah"
 author = "Your Name"
 email = "yname@someuniversity.edu"
 url = "http://someuniversity.edu/~yname/my-awesome-research-site"
+
+# Want to include some stylesheets on every page?
 css = [
-	"styles/main.css"
+	"styles/sample-style.css"
 ]
+
+# To spruce things up a bit- set the color for the navbar.
+# (For the sake of readability, it should probably be a fairly light color!)
+navbarBackgroundColor = "#9EE5B6"
 
 # People involved in your project
 people =
@@ -58,6 +64,7 @@ docpadConfig = {
 			]
 
 			localStyles: css
+			navbarBgColor: navbarBackgroundColor
 
 			# Scripts included with each page
 			scripts: [
@@ -160,6 +167,8 @@ docpadConfig = {
 		markedOptions:
 			tables: true
 }
+
+docpadConfig.templateData.site.localStyles.splice 0, 0, "styles/default.css"
 
 # Export our DocPad Configuration
 module.exports = docpadConfig

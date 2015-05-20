@@ -1,0 +1,17 @@
+/* Don't remove this style file! */
+
+@navbarBgColor: <%- @site.navbarBgColor %>;
+
+body {
+    padding-top: 70px;
+}
+
+.navbar-default {
+    background-image: none;
+    background-color: @navbarBgColor;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.open>a {
+    background-image: none;
+    background-color: lighten(@navbarBgColor, 10%);
+}
