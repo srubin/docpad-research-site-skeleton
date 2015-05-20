@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Meta -->
+	<meta charset="utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<!-- Use the .htaccess and remove these lines to avoid edge case issues.
+	   More info: h5bp.com/i/378 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<!-- Our site title and description -->
+	<title><%= @getPreparedTitle() %></title>
+	<meta name="description" content="<%= @getPreparedDescription() %>" />
+	<meta name="keywords" content="<%= @getPreparedKeywords() %>" />
+	<meta name="author" content="<%= @site.author or '' %>" />
+
+	<!-- Output DocPad produced meta elements -->
+	<%- @getBlock('meta').toHTML() %>
+
+	<!-- Mobile viewport optimized: h5bp.com/viewport -->
+	<meta name="viewport" content="width=device-width" />
+
+	<!-- Shims: IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+		<script async src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Styles -->
+	<% localStyles = ("#{@site.url}/#{style}" for style in @site.localStyles) %>
+
+	<%- @getBlock('styles').add(@site.styles).add(localStyles).toHTML() %>
+</head>
+<body>
+	<!-- Markup -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="<%= @site.url %>"><%= @site.title %></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+		<% for document in @getCollection('pages').toJSON(): %>
+			<li typeof="sioc:Page" about="<%= document.url %>" class="<%= 'active'  if @document.url is document.url %>">
+				<a href="<%= @getUrl(document) %>" property="dc:title"><%= document.title %></a>
+			</li>
+		<% end %>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+	<div class="container">
+		<section id="content" class="content">
+			<%- @content %>
+		</section>
+		<section>
+			<%- @getDisqus() %>
+		</section>
+	</div><!-- /container -->
+
+	<footer>
+	</footer>
+
+	<!-- Scripts -->
+	<% scripts = [] %>
+	<% externalScripts = @document.externalScripts or [] %>
+	<% scripts.push(script) for script in externalScripts %>
+
+	<% scripts.push("http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML") if @document.mathjax %>
+	<% scripts.push(@site.url + '/scripts/soundmanager2.js') if @document.soundmanager %>
+	<% scripts.push(@site.url + '/scripts/page-player.js') if @document.soundmanager and @document.pageplayer %>
+	<% scripts.push(@site.url + '/scripts/inlineplayer.js') if @document.soundmanager and @document.inlineplayer %>
+	<% if @document.mathjax: %>
+	<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+			tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+			"HTML-CSS": {
+				preferredFont: "STIX",
+				scale: 100
+			}
+		});
+	</script>
+	<% end %>
+
+
+
+	<% localScripts = @document.scripts or [] %>
+	<% scripts.push(@site.url + "/" + script) for script in localScripts %>
+	<%- @getBlock('scripts').add(@site.scripts.concat(scripts)).toHTML() %>
+</body>
+</html>

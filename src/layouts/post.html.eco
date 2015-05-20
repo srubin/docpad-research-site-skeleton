@@ -1,0 +1,27 @@
+---
+layout: default
+---
+
+<article id="post" class="post">
+	<div class="row">
+		<div class="col-md-8">
+			<h1><%= @document.title %></h1>
+	<div class="post-content"><%- @content %></div>	
+		</div>
+	</div>
+</article>
+
+
+<% if  @document.relatedDocuments and @document.relatedDocuments.length: %>
+<section id="related">
+	<h3>Related Posts</h3>
+	<nav class="linklist">
+		<% for document in @document.relatedDocuments: %>
+	<li><span><%= @prettyDate(document.date) %></span>
+    &mdash;
+    <a href="<%= @getUrl(document) %>"><%= document.title %></a></li>
+		<% end %>
+	</nav>
+</section>
+<% end %>
+

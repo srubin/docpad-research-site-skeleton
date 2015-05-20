@@ -1,0 +1,32 @@
+---
+layout: 'default'
+---
+    <div class="row">
+
+<div class="col-md-6">
+<section id="meetings">
+  <h2>Meetings</h2>
+    <% for document in @getCollection('meetings').toJSON(): %>
+    <li><span><%= @prettyDate(document.date) %></span>
+    &mdash;
+    <a href="<%= @getUrl(document) %>"><%= document.title %></a></li>
+  <% end %>
+</section>
+
+<section id="posts">
+  <h2>Posts</h2>
+  <% for document in @getCollection('posts').toJSON(): %>
+    <li><span><%= @prettyDate(document.date) %></span>
+    &mdash;
+    <a href="<%= @getUrl(document) %>"><%= document.title %></a></li>
+  <% end %>
+</section>
+</div>
+
+<div class="col-md-6">
+<article>
+<%- @content %>
+</article>
+</div>
+
+</div>

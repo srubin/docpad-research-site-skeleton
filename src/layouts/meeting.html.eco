@@ -1,0 +1,7 @@
+--- cson
+layout: "post"
+---
+
+<p class="lead"><%- @prettyDate(@document.date) %> &mdash; <%- (@people[person] for person in @document.participants).join(', ') %></p>
+
+<%- @content %>
