@@ -1,6 +1,10 @@
 # docpad-research-site-skeleton
 A docpad skeleton for creating a static research log to share with your collaborators
 
+## Configuration
+
+Before you start using this skeleton, update the configuration options in `docpad.coffee`.
+
 ## Building the site for development
 
 `docpad run` then launch [http://localhost:9778](http://localhost:9778)
